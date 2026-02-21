@@ -1,62 +1,65 @@
 name: Build and deploy Node.js app to Azure Web App - college-portal-final-123
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+push:
+branches:
+- main
+workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
+build:
+runs-on: ubuntu-latest
+permissions:
+contents: read
 
-    steps:
-      - uses: actions/checkout@v4
+```
+steps:
+  - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
+  - name: Set up Node.js
+    uses: actions/setup-node@v3
+    with:
+      node-version: '20.x'
 
-      - name: Install, build and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+  - name: Install, build and test
+    run: |
+      npm install
+      npm run build --if-present
+      npm run test --if-present
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-app
-          path: .
+  - name: Upload artifact
+    uses: actions/upload-artifact@v4
+    with:
+      name: node-app
+      path: .
+```
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      contents: read
+deploy:
+runs-on: ubuntu-latest
+needs: build
+permissions:
+contents: read
 
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: node-app
+```
+steps:
+  - name: Download artifact
+    uses: actions/download-artifact@v4
+    with:
+      name: node-app
 
-      # AZURE LOGIN (SERVICE PRINCIPAL)
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+  - name: Login to Azure
+    uses: azure/login@v2
+    with:
+      auth-type: SERVICE_PRINCIPAL
+      client-id: ${{ secrets.AZURE_CLIENT_ID }}
+      tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
-      # DEPLOY
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: college-portal-final-123
-          slot-name: Production
-          package: .
+  - name: Deploy to Azure Web App
+    uses: azure/webapps-deploy@v3
+    with:
+      app-name: college-portal-final-123
+      slot-name: Production
+      package: .
+```
