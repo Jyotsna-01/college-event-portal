@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - college-event-portal
+name: Build and deploy Node.js app to Azure Web App - college-portal-final-123
 
 on:
   push:
@@ -51,15 +51,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FD2E3AF0D2C84185AE85D2E55384C004 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_77B0708897C4469D94454815EDF0205D }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1EED6C6A72D9467D94B9DAC0F3E4C7E5 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_EC2A62CFAD1546D2930B683C75204910 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_069B9110D81944999E363F8455494FBE }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_098040B1D6F640DE8CAFC43CEF6D5260 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'college-event-portal'
+          app-name: 'college-portal-final-123'
           slot-name: 'Production'
           package: .
           
